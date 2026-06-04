@@ -43,7 +43,8 @@ const MusicPlayer = memo(function MusicPlayer() {
               src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
               width="100%"
               height="100%"
-              allow="autoplay; clipboard-write; encrypted-media"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
               className="border-0"
             />
           )}
@@ -52,47 +53,54 @@ const MusicPlayer = memo(function MusicPlayer() {
     
       <div className="relative group">
         <button
-            onClick={handleToggle}
-            className={`flex items-center p-1.5 pr-8 rounded-full transition-all duration-500 shadow-2xl border bg-white/80 backdrop-blur-md border-stone-200/50 hover:border-stone-300 cursor-pointer`}
+          onClick={handleToggle}
+          className={`flex items-center p-1.5 rounded-full transition-all duration-500 shadow-2xl border bg-white/80 backdrop-blur-md border-stone-200/50 hover:border-stone-300 cursor-pointer ${
+            isPlaying ? 'pr-1.5' : 'pr-8' // Remove o recuo extra da direita se estiver tocando
+          }`}
         >
-            <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-700 shadow-lg ${
-              isPlaying ? 'bg-stone-900 rotate-[360deg]' : 'bg-stone-900'
-            }`}>
-              <img
-                  src="/spotify.png"
-                  alt="Spotify"
-                  className={`w-7 h-7 object-contain transition-all ${
-                    isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''
-                  }`}
-              />
-            </div>
+          {/* O "Disco" do Spotify */}
+          <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-700 shadow-lg ${
+            isPlaying ? 'bg-stone-900 rotate-[360deg]' : 'bg-stone-900'
+          }`}>
+            <img
+              src="/spotify.png"
+              alt="Spotify"
+              className={`w-7 h-7 object-contain transition-all ${
+                isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''
+              }`}
+            />
+          </div>
 
-            <div className="ml-4 flex flex-col items-start select-none">
-              <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-stone-800">
-                  {isOpen ? 'Ouvindo Trilha' : 'Nossa Trilha'}
-              </span>
-              <span className={`text-[10px] uppercase tracking-widest font-bold transition-colors ${
-                  isPlaying ? 'text-[#1DB954]' : 'text-stone-400'
-              }`}>
-                  {isPlaying ? 'No ar' : 'Clique e dê o play!'}
-              </span>
-            </div>
+          {/* Bloco de Texto Animado (Desaparece quando dá o play) */}
+          <div className={`flex flex-col items-start select-none transition-all duration-500 overflow-hidden ${
+            isPlaying 
+              ? 'w-0 opacity-0 ml-0 pointer-events-none' 
+              : 'w-[120px] opacity-100 ml-4' // Mantém o tamanho original se estiver pausado
+          }`}>
+            <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-stone-800 whitespace-nowrap">
+              Nossa Trilha
+            </span>
+            <span className="text-[10px] uppercase tracking-widest font-bold text-stone-400 whitespace-nowrap">
+              Clique e dê o play!
+            </span>
+          </div>
         </button>
 
+        {/* Botão de Stop (Quadradinho para parar a música) */}
         <AnimatePresence>
           {isPlaying && (
-              <motion.button
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                onClick={handleStop}
-                className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-stone-900 text-white flex items-center justify-center shadow-xl border-2 border-white hover:bg-red-500 transition-colors duration-300 cursor-pointer"
-                title="Desligar vitrola"
-              >
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                   <rect x="4" y="4" width="16" height="16" rx="2" />
-                </svg>
-              </motion.button>
+            <motion.button
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              onClick={handleStop}
+              className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-stone-900 text-white flex items-center justify-center shadow-xl border-2 border-white hover:bg-red-500 transition-colors duration-300 cursor-pointer z-30"
+              title="Desligar vitrola"
+            >
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="4" y="4" width="16" height="16" rx="2" />
+              </svg>
+            </motion.button>
           )}
         </AnimatePresence>
       </div>
