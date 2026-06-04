@@ -1,0 +1,28 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Suas tabelas continuam iguais abaixo...
+model Convite {
+  id               String      @id @default(uuid())
+  codigo           String      @unique
+  nomeExibicao     String
+  maxAcompanhantes Int         @default(0)
+  confirmado       Boolean     @default(false)
+  qtdConfirmados   Int         @default(0)
+  dataConfirmacao  DateTime?
+  isAdmin          Boolean     @default(false)
+  mensagens        Mensagem[]
+}
+
+model Mensagem {
+  id         String   @id @default(uuid())
+  conteudo   String   @db.Text
+  createdAt  DateTime @default(now())
+  conviteId  String
+  convite    Convite  @relation(fields: [conviteId], references: [id], onDelete: Cascade)
+}
