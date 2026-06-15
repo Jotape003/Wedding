@@ -119,13 +119,15 @@ function UnauthorizedToast() {
 // 2. Componente principal da página limpo e compatível com a renderização estática
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#f3f2ee]">
+    <main className="min-h-screen">
       {/* INTRODUÇÃO E TIMER */}
-      <section className="relative z-20 -mt-32 pb-24 text-center px-6">
+      <section className="relative z-20 pt-26 pb-24 text-center px-6">
         <div className="max-w-3xl mx-auto space-y-12">
           <div className="space-y-6">
-            <h2 className="text-4xl font-serif italic text-stone-800">Bem-vindos ao nosso site</h2>
-            <p className="text-stone-600 leading-relaxed font-light text-lg">
+            <h2 className="text-4xl md:text-5xl font-serif italic text-pastel-texto">
+              Bem-vindos ao nosso site
+            </h2>
+            <p className="text-pastel-texto/80 leading-relaxed font-light text-lg">
               Criamos este espaço para compartilhar com vocês cada detalhe da nossa caminhada até o altar. 
               Aqui você encontrará nossa história, informações sobre o local da cerimônia, nossa lista de presentes 
               e, claro, o espaço para confirmar sua presença. Estamos ansiosos para celebrar este dia 
@@ -133,16 +135,40 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="py-12 border-y border-stone-200/60">
-            <p className="text-stone-400 uppercase tracking-[0.5em] text-[10px] mb-10 font-bold">
-              Faltam para o grande dia:
-            </p>
-            <Countdown />
+          {/* O Bloco do Contador Repaginado (Com Borda Animada Pastel) */}
+          <div className="relative mx-auto mt-12 mb-12 max-w-3xl rounded-[34px] p-[3px] overflow-hidden shadow-[0_8px_30px_rgba(74,68,63,0.08)]">
+            
+            {/* 1. O Efeito Mágico: Fundo Degradê Giratório */}
+            <div className="absolute inset-0 bg-[conic-gradient(from_0deg,var(--color-pastel-blush),var(--color-pastel-butter),var(--color-pastel-lavender),var(--color-pastel-sage),var(--color-pastel-blush))] animate-[spin_6s_linear_infinite] w-[200%] h-[200%] top-[-50%] left-[-50%]" />   
+
+            {/* 2. O Card Principal (Fica por cima, cobrindo o miolo e deixando só a borda vazar) */}
+            <div className="relative py-12 px-4 md:px-8 bg-white/90 backdrop-blur-xl rounded-[32px] w-full h-full flex flex-col items-center">
+              
+              {/* Detalhe flutuante no topo */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-pastel-blush px-4 py-1 rounded-full border-[3px] border-[#FCFAF8] shadow-md z-30 transition-transform duration-500 group-hover:-translate-y-1">
+                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-pastel-texto font-sans">
+                  Contagem Regressiva
+                </span>
+              </div>
+
+              <p className="text-pastel-texto/60 uppercase tracking-[0.4em] text-[15px] mb-8 font-bold font-sans mt-2">
+                Faltam para o grande dia:
+              </p>
+              
+              <Countdown />
+            </div>
           </div>
           
-          <p className="text-stone-500 font-serif italic text-xl">28 de Agosto de 2026 • Fortaleza, CE</p>
+          {/* Data e Local de Destaque Inferior */}
+          <div className="space-y-1 pb-8">
+            <p className="text-pastel-texto font-serif italic text-2xl md:text-3xl tracking-wide">
+              28 de Agosto de 2026
+            </p>
+            <p className="text-pastel-texto/60 font-sans uppercase tracking-[0.2em] text-xs font-medium">
+              Fortaleza, CE
+            </p>
+          </div>
 
-          {/* O segredo do build de sucesso: envelopar o componente dinâmico com o Suspense */}
           <Suspense fallback={null}>
             <UnauthorizedToast />
           </Suspense>

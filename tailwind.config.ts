@@ -1,17 +1,25 @@
-// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
-      animation: {
-        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      colors: {
+        pastel: {
+          fundo: '#FAF7F2',
+          blush: '#FBEBE7',
+          sage: '#E5EAE4',
+          lavender: '#EAE6FA',
+          butter: '#FDF6E2',
+          texto: '#4A443F',
+        }
       },
+      fontFamily: {
+        serif: ['var(--font-titulo)', 'serif'],
+        sans: ['var(--font-corpo)', 'sans-serif'],
+      }
     },
   },
   plugins: [],
