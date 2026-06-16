@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Countdown from '../components/Countdown';
 import { Lock, X } from "lucide-react";
+import StoryCarousel from '../components/StoryCarousel';
 
 // 1. Isolamos o Toast que consome o 'useSearchParams' para não quebrar o build estático
 function UnauthorizedToast() {
@@ -12,15 +13,15 @@ function UnauthorizedToast() {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    // Se a URL contiver o erro de não autorizado, exibe o alerta
     if (searchParams.get('error') === 'unauthorized') {
       setShowToast(true);
 
-      // Limpa a URL para o "/?error=unauthorized" sumir da barra de endereço
       router.replace('/');
 
-      // Esconde o alerta automaticamente depois de 5 segundos
-      const timer = setTimeout(() => setShowToast(false), 5000);
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 6000);
+
       return () => clearTimeout(timer);
     }
   }, [searchParams, router]);
@@ -31,83 +32,80 @@ function UnauthorizedToast() {
         <motion.div
           initial={{ opacity: 0, y: -24, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -16, scale: 0.96 }}
+          exit={{ opacity: 0, y: -12, scale: 0.96 }}
           transition={{
-            duration: 0.5,
+            duration: 0.45,
             ease: [0.22, 1, 0.36, 1],
           }}
           className="
-            fixed top-30 left-1/2 -translate-x-1/2
+            fixed top-[90px] left-1/2 -translate-x-1/2
             z-[250]
             w-[92%] max-w-md
             overflow-hidden
             rounded-[28px]
-            border border-white/40
-            bg-white/70
-            backdrop-blur-2xl
-            shadow-[0_12px_50px_rgba(0,0,0,0.12)]
+            border border-pastel-blush/20
+            bg-white/90
+            backdrop-blur-xl
+            shadow-[0_20px_60px_rgba(74,68,63,0.12)]
           "
         >
-          {/* Glow decorativo */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-[#efe7de]/30 pointer-events-none" />
+          {/* Glow suave */}
+          <div className="absolute inset-0 bg-gradient-to-br from-pastel-blush/10 via-transparent to-pastel-butter/20 pointer-events-none" />
 
-          {/* Linha superior elegante */}
-          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#d8c3a5] to-transparent" />
+          {/* Linha decorativa superior */}
+          <div className="h-[2px] bg-gradient-to-r from-transparent via-pastel-blush to-transparent" />
 
-          <div className="relative p-5 flex items-start gap-4 text-left">
+          <div className="relative p-5 flex items-start gap-4">
 
             {/* Ícone */}
             <div
               className="
                 flex items-center justify-center
-                min-w-11 h-11 rounded-full
-                bg-[#f7f3ee]
-                border border-[#ece3d8]
+                min-w-12 h-12
+                rounded-full
+                bg-pastel-blush/15
+                border border-pastel-blush/20
                 shadow-sm
               "
             >
-              <Lock
-                size={16}
-                strokeWidth={1.7}
-                className="text-[#b59b7d]"
-              />
+              <Lock size={20} strokeWidth={2.5} />
             </div>
 
             {/* Conteúdo */}
             <div className="flex-1 pr-2">
-              <p className="text-[10px] uppercase tracking-[0.28em] text-[#b59b7d] font-semibold">
-                Área Privada
+              <p className="text-[10px] uppercase tracking-[0.3em] text-pastel-blush font-bold">
+                Área Especial
               </p>
 
-              <h4 className="mt-1 text-[22px] leading-none text-stone-800 font-serif italic">
-                Acesso exclusivo
+              <h4 className="mt-1 text-2xl font-serif font-bold italic text-pastel-texto">
+                Convite necessário
               </h4>
 
-              <p className="mt-3 text-[14px] leading-relaxed text-stone-600">
-                Esta página é reservada para convidados.
-                Clique em{" "}
-                <span className="font-medium text-stone-800">
+              <p className="mt-3 text-sm leading-relaxed text-pastel-texto/70 font-sans">
+                Esta página foi preparada para nossos convidados confirmados.
+                Para continuar, basta realizar seu{' '}
+                <span className="font-semibold text-pastel-texto">
                   RSVP
-                </span>{" "}
-                no menu superior e insira seu código de acesso.
+                </span>{' '}
+                utilizando o menu superior.
               </p>
             </div>
 
-            {/* Botão fechar */}
+            {/* Fechar */}
             <button
               onClick={() => setShowToast(false)}
               className="
-                relative z-20
                 flex items-center justify-center
-                min-w-8 h-8 rounded-full
-                text-stone-400
-                hover:text-stone-700
-                hover:bg-black/5
+                min-w-8 h-8
+                rounded-full
+                text-pastel-texto/40
+                hover:text-pastel-texto
+                hover:bg-pastel-blush/10
                 transition-all duration-300
                 cursor-pointer
               "
             >
-              <X size={20} strokeWidth={2} />
+              <X size={18} />
             </button>
           </div>
         </motion.div>
@@ -121,7 +119,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* INTRODUÇÃO E TIMER */}
-      <section className="relative z-20 pt-26 pb-24 text-center px-6">
+      <section className="relative z-20 pt-26 pb-12 text-center px-6">
         <div className="max-w-3xl mx-auto space-y-12">
           <div className="space-y-6">
             <h2 className="text-4xl md:text-5xl font-serif italic text-pastel-texto">
@@ -137,6 +135,7 @@ export default function HomePage() {
 
           {/* O Bloco do Contador Repaginado (Com Borda Animada Pastel) */}
           <div className="relative mx-auto mt-12 mb-12 max-w-3xl rounded-[34px] p-[3px] overflow-hidden shadow-[0_8px_30px_rgba(74,68,63,0.08)]">
+
             
             {/* 1. O Efeito Mágico: Fundo Degradê Giratório */}
             <div className="absolute inset-0 bg-[conic-gradient(from_0deg,var(--color-pastel-blush),var(--color-pastel-butter),var(--color-pastel-lavender),var(--color-pastel-sage),var(--color-pastel-blush))] animate-[spin_6s_linear_infinite] w-[200%] h-[200%] top-[-50%] left-[-50%]" />   
@@ -175,6 +174,13 @@ export default function HomePage() {
 
         </div>
       </section>
+
+      {/* ─── NOSSA HISTÓRIA (Carrossel Interativo) ─── */}
+      <section className="relative z-20 pb-24">
+        {/* Usamos o componente que acabamos de criar */}
+        <StoryCarousel />
+      </section>
+
     </main>
   );
 }

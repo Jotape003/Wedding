@@ -110,8 +110,8 @@ export default function RsvpForm() {
             className="text-center flex flex-col gap-5 py-2"
           >
             {/* Ícone com borda Lilás */}
-            <div className="w-16 h-16 bg-pastel-lavender/20 text-pastel-texto border border-pastel-lavender/50 rounded-full flex items-center justify-center mx-auto text-2xl shadow-sm">
-              ✨
+            <div className="w-16 h-16 bg-pastel-sage/20 text-pastel-sage border border-pastel-sage/50 rounded-full flex items-center justify-center mx-auto text-2xl shadow-sm">
+              ✓
             </div>
             <div>
               <h3 className="font-serif text-3xl text-pastel-texto font-semibold italic">Presença Confirmada!</h3>

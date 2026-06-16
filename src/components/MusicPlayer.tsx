@@ -7,7 +7,7 @@ const MusicPlayer = memo(function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
-  const playlistId = "37i9dQZF1EJHevdp29Ll2V?si=jaVte_AeQ4iiA9Ij8h5WEA";
+  const youtubePlaylistId = "PLotbF8Lf-hOhUUqgM3svjVgPAh1O_DK0B";
 
   const handleToggle = (e?: MouseEvent<HTMLButtonElement>) => {
     if (isDragging) return;
@@ -37,13 +37,14 @@ const MusicPlayer = memo(function MusicPlayer() {
         }`}
         style={{ transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
       >
-        <div className="rounded-[2.5rem] overflow-hidden bg-[#0f0f0f] w-[300px] h-[152px] shadow-2xl ring-1 ring-white/10">
+        {/* Altura ajustada para 169px (16:9) para o YouTube não ficar com barras pretas */}
+        <div className="rounded-[1.5rem] overflow-hidden bg-[#0f0f0f] w-[300px] h-[169px] shadow-2xl ring-1 ring-white/10">
           {isPlaying && (
             <iframe
-              src={`https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`}
+              src={`https://www.youtube.com/embed/videoseries?list=${youtubePlaylistId}&autoplay=1`}
               width="100%"
               height="100%"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
               className="border-0"
             />
@@ -55,38 +56,37 @@ const MusicPlayer = memo(function MusicPlayer() {
         <button
           onClick={handleToggle}
           className={`flex items-center p-1.5 rounded-full transition-all duration-500 shadow-2xl border bg-white/80 backdrop-blur-md border-stone-200/50 hover:border-stone-300 cursor-pointer ${
-            isPlaying ? 'pr-1.5' : 'pr-8' // Remove o recuo extra da direita se estiver tocando
+            isPlaying ? 'pr-1.5' : 'pr-8' 
           }`}
         >
-          {/* O "Disco" do Spotify */}
+          {/* O "Disco" Giratório */}
           <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-700 shadow-lg ${
             isPlaying ? 'bg-stone-900 rotate-[360deg]' : 'bg-stone-900'
           }`}>
             <img
-              src="/spotify.png"
-              alt="Spotify"
+              src="/youtube.png"
+              alt="Música"
               className={`w-7 h-7 object-contain transition-all ${
                 isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''
               }`}
             />
           </div>
-
-          {/* Bloco de Texto Animado (Desaparece quando dá o play) */}
+          {/* Bloco de Texto Animado */}
           <div className={`flex flex-col items-start select-none transition-all duration-500 overflow-hidden ${
             isPlaying 
               ? 'w-0 opacity-0 ml-0 pointer-events-none' 
-              : 'w-[120px] opacity-100 ml-4' // Mantém o tamanho original se estiver pausado
+              : 'w-[120px] opacity-100 ml-4' 
           }`}>
             <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-stone-800 whitespace-nowrap">
               Nossa Trilha
             </span>
             <span className="text-[10px] uppercase tracking-widest font-bold text-stone-400 whitespace-nowrap">
-              Clique e dê o play!
+              Clique aqui!
             </span>
           </div>
         </button>
 
-        {/* Botão de Stop (Quadradinho para parar a música) */}
+        {/* Botão de Stop */}
         <AnimatePresence>
           {isPlaying && (
             <motion.button

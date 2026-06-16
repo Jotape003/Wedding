@@ -61,27 +61,27 @@ export default function MuralForm() {
       <div className="absolute inset-0 bg-gradient-to-br from-pastel-butter/80 via-pastel-blush/50 to-pastel-sage/50 rounded-[32px] rotate-[-3deg] scale-[1.02] shadow-md z-0 transition-transform duration-500 group-hover:rotate-[-4deg]" />
 
       {/* Container da borda animada */}
-      <div className="relative mx-auto mt-12 mb-12 max-w-3xl rounded-[34px] p-[3px] overflow-hidden shadow-[0_8px_30px_rgba(74,68,63,0.08)]">
-
-        {/* Fundo degradê giratório */}
-        <div className="absolute inset-0 bg-[conic-gradient(from_0deg,var(--color-pastel-blush),var(--color-pastel-butter),var(--color-pastel-lavender),var(--color-pastel-sage),var(--color-pastel-blush))] animate-[spin_6s_linear_infinite] w-[200%] h-[200%] top-[-50%] left-[-50%]" />
-
+      <div className="relative mx-auto mt-12 mb-12 max-w-3xl rounded-[34px] p-[3px] overflow-hidden shadow-[0_8px_30px_rgba(74,68,63,0.08)] z-10">
+            
+        {/* 1. O Efeito Mágico: Fundo Degradê Giratório (Livre do inset-0) */}
+        <div className="absolute inset-0 bg-[conic-gradient(from_0deg,var(--color-pastel-blush),var(--color-pastel-butter),var(--color-pastel-lavender),var(--color-pastel-sage),var(--color-pastel-blush))] animate-[spin_6s_linear_infinite] w-[125%] h-[125%] top-[-15%] left-[-15%]" />   
+        
         {/* Card principal */}
-        <div className="relative py-12 px-4 md:px-8 bg-white/90 backdrop-blur-xl rounded-[32px] w-full h-full flex flex-col items-center">
+        <div className="relative py-12 px-4 md:px-8 bg-white/90 backdrop-blur-xl rounded-[31px] w-full h-full flex flex-col items-center">
 
           {/* Selo superior */}
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-pastel-blush px-4 py-1 rounded-full border-[3px] border-[#FCFAF8] shadow-md z-30 transition-transform duration-500 group-hover:-translate-y-1">
-            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-pastel-texto font-sans">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-pastel-blush px-4 py-1 rounded-full border-[3px] border-[#FCFAF8] shadow-md z-30 transition-transform duration-500">
+            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-white font-sans whitespace-nowrap">
               Livro de Visitas
             </span>
           </div>
 
           <div className="relative z-10 mt-2 w-full">
-            <h3 className="font-serif italic text-3xl text-pastel-texto mb-2 text-center">
+            <h3 className="font-serif italic text-4xl text-pastel-texto font-bold mb-2 text-center">
               Deixe seu carinho...
             </h3>
 
-            <p className="text-pastel-texto/70 text-sm font-sans font-light text-center mb-8 px-4">
+            <p className="text-pastel-texto/70 text-2sm font-sans font-light text-center mb-8 px-4">
               Escreva um recadinho fofo para lermos e guardarmos com carinho.
             </p>
 
@@ -95,7 +95,7 @@ export default function MuralForm() {
                 onChange={(e) => setMensagem(e.target.value)}
                 rows={4}
                 disabled={loading || sucesso}
-                className="w-full p-5 rounded-2xl border border-pastel-texto/10 bg-white text-pastel-texto font-sans text-sm focus:outline-none focus:ring-2 focus:ring-pastel-blush/60 focus:border-transparent resize-none placeholder:text-pastel-texto/30 transition-all shadow-inner"
+                className="w-full p-5 rounded-2xl border border-pastel-texto/10 bg-white text-pastel-texto font-sans text-2sm focus:outline-none focus:ring-2 focus:ring-pastel-blush/60 focus:border-transparent resize-none placeholder:text-pastel-texto/30 transition-all shadow-inner"
               />
 
               {erro && (
@@ -121,7 +121,7 @@ export default function MuralForm() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-[#FCFAF8]/95 backdrop-blur-md flex flex-col items-center justify-center z-20 rounded-[32px]"
+                className="absolute inset-0 bg-[#FCFAF8]/95 backdrop-blur-md flex flex-col items-center justify-center z-20 rounded-[31px]"
               >
                 <div className="w-16 h-16 bg-pastel-sage/20 text-pastel-sage border border-pastel-sage/40 rounded-full flex items-center justify-center mb-4 text-3xl font-bold shadow-sm">
                   ✓
