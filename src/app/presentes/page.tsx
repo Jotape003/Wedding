@@ -128,15 +128,6 @@ export default function PresentesPage() {
                       <CreditCard size={14} />
                       Cartão
                     </a>
-                    <a 
-                      href={item.linkLoja}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-3 bg-transparent text-pastel-texto/60 rounded-2xl font-sans font-bold uppercase tracking-[0.05em] text-[9px] hover:text-pastel-texto transition-all"
-                    >
-                      <ExternalLink size={14} />
-                      Ver na Loja
-                    </a>
                   </div>
                 </div>
               </div>
