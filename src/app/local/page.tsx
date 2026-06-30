@@ -1,3 +1,5 @@
+import { MapPin } from "lucide-react";
+
 export default function LocalPage() {
   return (
     <main className="min-h-screen px-6 pt-12 pb-24 relative overflow-hidden">
@@ -10,6 +12,9 @@ export default function LocalPage() {
         
         {/* ─── CABEÇALHO ─── */}
         <header className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-sm text-pastel-blush mb-2">
+            <MapPin size={28} strokeWidth={1.5} />
+          </div>
           <h1 className="text-4xl md:text-5xl font-serif italic text-pastel-texto">
             O Local do Sim
           </h1>

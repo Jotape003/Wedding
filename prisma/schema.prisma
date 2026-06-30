@@ -6,7 +6,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Suas tabelas continuam iguais abaixo...
 model Convite {
   id               String      @id @default(uuid())
   codigo           String      @unique
@@ -25,4 +24,37 @@ model Mensagem {
   createdAt  DateTime @default(now())
   conviteId  String
   convite    Convite  @relation(fields: [conviteId], references: [id], onDelete: Cascade)
+}
+
+model MensagemMural {
+  id        String   @id @default(uuid())
+  nome      String
+  mensagem  String   @db.Text
+  createdAt DateTime @default(now())
+  
+  // Controle de segurança (Soft delete ou aprovação)
+  aprovada  Boolean  @default(true) 
+
+  @@index([createdAt(sort: Desc)])
+}
+
+// ─── ESTRUTURA DO RSVP (CONFIRMAÇÃO DE PRESENÇA) ───
+
+model Familia {
+  id                 String      @id @default(uuid())
+  nomeExibicao       String      // Ex: "Dona Lucinha e Família"
+  codigoAcesso       String      @unique // Ex: "LUCINHA2026"
+  
+  // Onde vamos guardar o número final
+  numeroConfirmados  Int?        // Se for null, é porque ainda não responderam
+  
+  convidados         Convidado[] 
+}
+
+model Convidado {
+  id           String   @id @default(uuid())
+  nome         String
+  
+  familiaId    String
+  familia      Familia  @relation(fields: [familiaId], references: [id], onDelete: Cascade)
 }

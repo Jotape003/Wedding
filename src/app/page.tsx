@@ -3,7 +3,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Countdown from '../components/Countdown';
-import { Lock, X } from "lucide-react";
+import { Heart, Lock, X } from "lucide-react";
 import StoryCarousel from '../components/StoryCarousel';
 
 // 1. Isolamos o Toast que consome o 'useSearchParams' para não quebrar o build estático
@@ -119,17 +119,19 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* INTRODUÇÃO E TIMER */}
-      <section className="relative z-20 pt-26 pb-12 text-center px-6">
+      <section className="relative z-20 pt-12 pb-12 text-center px-6">
         <div className="max-w-3xl mx-auto space-y-12">
           <div className="space-y-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-sm text-pastel-blush mb-2">
+                 <Heart size={28} strokeWidth={1.5} />
+            </div>
             <h2 className="text-4xl md:text-5xl font-serif italic text-pastel-texto">
-              Bem-vindos ao nosso site
+              Sejam bem-vindos!
             </h2>
             <p className="text-pastel-texto/80 leading-relaxed font-light text-lg">
-              Criamos este espaço para compartilhar com vocês cada detalhe da nossa caminhada até o altar. 
-              Aqui você encontrará nossa história, informações sobre o local da cerimônia, nossa lista de presentes 
-              e, claro, o espaço para confirmar sua presença. Estamos ansiosos para celebrar este dia 
-              inesquecível ao seu lado. Ah! e se quiser deixar uma mensagem para a gente, tem um espaço especial para isso também. Basta clicar no botão RSVP e escrever o que quiser!
+              Criamos este espaço para dividir com vocês cada etapa da nossa caminhada até o altar. Aqui, vocês encontrarão nossa história, os detalhes da nossa cerimônia, a nossa lista de presentes e o campo dedicado para a Confirmação de Presença.
+              
+              Além disso, preparamos um Mural especial para guardarmos o carinho de quem amamos; fiquem à vontade para deixar sua mensagem por lá. Estamos contando os dias para celebrar este capítulo inesquecível ao lado de vocês!
             </p>
           </div>
 

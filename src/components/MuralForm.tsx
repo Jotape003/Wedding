@@ -2,53 +2,47 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { adicionarMensagem } from '@/src/actions/mural';
 
-export default function MuralForm() {
+export default function MuralForm({ onMensagemEnviada }: { onMensagemEnviada: () => void }) {
+  const [nome, setNome] = useState('');
   const [mensagem, setMensagem] = useState('');
   const [loading, setLoading] = useState(false);
   const [sucesso, setSucesso] = useState(false);
   const [erro, setErro] = useState('');
 
-  const router = useRouter();
-
   const handleEnviar = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!mensagem.trim()) return;
+    if (!mensagem.trim() || !nome.trim()) return;
 
     setLoading(true);
     setErro('');
 
+    // Prepara os dados para a Server Action
+    const formData = new FormData();
+    formData.append('nome', nome);
+    formData.append('mensagem', mensagem);
+
     try {
-      const res = await fetch('/api/mural', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          conteudo: mensagem,
-        }),
-      });
+      const resultado = await adicionarMensagem(formData);
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Erro ao enviar mensagem.');
+      if (resultado?.error) {
+        throw new Error(resultado.error);
       }
 
       setSucesso(true);
       setMensagem('');
-
-      router.refresh();
+      setNome('');
+      
+      // Avisa a página mãe para recarregar a lista
+      onMensagemEnviada();
 
       setTimeout(() => {
         setSucesso(false);
       }, 3000);
     } catch (err) {
-      setErro(
-        err instanceof Error ? err.message : 'Erro ao enviar mensagem.'
-      );
+      setErro(err instanceof Error ? err.message : 'Erro ao enviar mensagem.');
     } finally {
       setLoading(false);
     }
@@ -63,7 +57,7 @@ export default function MuralForm() {
       {/* Container da borda animada */}
       <div className="relative mx-auto mt-12 mb-12 max-w-3xl rounded-[34px] p-[3px] overflow-hidden shadow-[0_8px_30px_rgba(74,68,63,0.08)] z-10">
             
-        {/* 1. O Efeito Mágico: Fundo Degradê Giratório (Livre do inset-0) */}
+        {/* 1. O Efeito Mágico: Fundo Degradê Giratório */}
         <div className="absolute inset-0 bg-[conic-gradient(from_0deg,var(--color-pastel-blush),var(--color-pastel-butter),var(--color-pastel-lavender),var(--color-pastel-sage),var(--color-pastel-blush))] animate-[spin_6s_linear_infinite] w-[125%] h-[125%] top-[-15%] left-[-15%]" />   
         
         {/* Card principal */}
@@ -81,7 +75,7 @@ export default function MuralForm() {
               Deixe seu carinho...
             </h3>
 
-            <p className="text-pastel-texto/70 text-2sm font-sans font-light text-center mb-8 px-4">
+            <p className="text-pastel-texto/70 text-sm md:text-base font-sans font-light text-center mb-8 px-4">
               Escreva um recadinho fofo para lermos e guardarmos com carinho.
             </p>
 
@@ -89,13 +83,22 @@ export default function MuralForm() {
               onSubmit={handleEnviar}
               className="flex flex-col gap-4 relative"
             >
+              <input
+                type="text"
+                placeholder="Seu nome ou da família..."
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                disabled={loading || sucesso}
+                className="w-full p-5 rounded-2xl border border-pastel-texto/10 bg-white text-pastel-texto font-sans text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-pastel-blush/60 focus:border-transparent placeholder:text-pastel-texto/30 transition-all shadow-inner"
+              />
+
               <textarea
                 placeholder="Era uma vez..."
                 value={mensagem}
                 onChange={(e) => setMensagem(e.target.value)}
                 rows={4}
                 disabled={loading || sucesso}
-                className="w-full p-5 rounded-2xl border border-pastel-texto/10 bg-white text-pastel-texto font-sans text-2sm focus:outline-none focus:ring-2 focus:ring-pastel-blush/60 focus:border-transparent resize-none placeholder:text-pastel-texto/30 transition-all shadow-inner"
+                className="w-full p-5 rounded-2xl border border-pastel-texto/10 bg-white text-pastel-texto font-sans text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-pastel-blush/60 focus:border-transparent resize-none placeholder:text-pastel-texto/30 transition-all shadow-inner"
               />
 
               {erro && (
@@ -106,8 +109,8 @@ export default function MuralForm() {
 
               <button
                 type="submit"
-                disabled={loading || sucesso || !mensagem.trim()}
-                className="self-end px-8 py-3.5 bg-pastel-blush text-white rounded-full font-sans font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-pastel-blush/90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                disabled={loading || sucesso || !mensagem.trim() || !nome.trim()}
+                className="self-end px-8 py-3.5 bg-pastel-blush text-white rounded-full font-sans font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-pastel-blush/90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mt-2"
               >
                 {loading ? 'Enviando...' : 'Enviar Mensagem'}
               </button>

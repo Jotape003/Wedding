@@ -4,11 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X as CloseIcon } from 'lucide-react';
-import RsvpForm from './RsvpForm';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isRsvpOpen, setIsRsvpOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -26,7 +24,6 @@ export default function Navbar() {
 
   const isActive = (path: string) => pathname === path;
 
-  // Array de navegação com as cores exclusivas para cada rota
   const navItems = [
     { 
       path: '/', 
@@ -43,18 +40,18 @@ export default function Navbar() {
       dotColor: 'bg-pastel-sage'
     },
     { 
-      path: '/mural', 
-      label: 'Mural', 
-      textColorActive: 'text-pastel-butter', 
-      hoverTextColor: 'hover:text-pastel-butter',
-      dotColor: 'bg-pastel-butter'
-    },
-    { 
       path: '/presentes', 
       label: 'Presentes', 
       textColorActive: 'text-pastel-lavender', 
       hoverTextColor: 'hover:text-pastel-lavender',
       dotColor: 'bg-pastel-lavender'
+    },
+    { 
+      path: '/mural', 
+      label: 'Mural', 
+      textColorActive: 'text-pastel-butter', 
+      hoverTextColor: 'hover:text-pastel-butter',
+      dotColor: 'bg-pastel-butter'
     }
   ];
 
@@ -92,7 +89,6 @@ export default function Navbar() {
                 <span className={`transition-colors duration-300 ${item.hoverTextColor} ${active ? `${item.textColorActive} font-bold` : ''}`}>
                   {item.label}
                 </span>
-                {/* A bolinha agora assume a cor única de cada menu! */}
                 <span className={`absolute -bottom-2 w-1.5 h-1.5 rounded-full ${item.dotColor} transition-all duration-300 ${
                   active ? 'opacity-100 scale-100' : 'opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100'
                 }`} />
@@ -100,17 +96,17 @@ export default function Navbar() {
             )
           })}
 
-          {/* Botão RSVP */}
-          <button 
-            onClick={() => setIsRsvpOpen(true)}
-            className={`ml-4 px-7 py-2.5 rounded-full transition-all duration-300 transform hover:scale-105 font-sans font-bold uppercase tracking-[0.2em] text-[11px] cursor-pointer shadow-sm ${
+          {/* Botão RSVP (Agora é um Link direto!) */}
+          <Link 
+            href="/rsvp"
+            className={`ml-4 px-7 py-2.5 rounded-full transition-all duration-300 transform hover:scale-105 font-sans font-bold uppercase tracking-[0.2em] text-[11px] shadow-sm ${
               scrolled 
                 ? 'bg-pastel-texto text-pastel-fundo hover:bg-pastel-texto/90' 
                 : 'bg-white/95 text-pastel-texto hover:bg-white'
             }`}
           >
-            RSVP
-          </button>
+            Presença
+          </Link>
         </div>
 
         {/* ─── MOBILE MENU BUTTON ─── */}
@@ -126,25 +122,25 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ─── MOBILE MENU DROPDOWN ─── */}
+      {/* ─── MOBILE MENU DROPDOWN (AJUSTADO E CONTIDO) ─── */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-x-0 top-[70px] z-40 bg-pastel-fundo/95 backdrop-blur-xl border-b border-pastel-texto/10 p-6 md:hidden flex flex-col gap-4 text-center shadow-2xl"
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            transition={{ duration: 0.2 }}
+            // Agora o menu é um card flutuante, não ocupa a largura inteira
+            className="fixed top-[90px] right-6 z-40 w-[200px] bg-white/95 backdrop-blur-xl border border-pastel-texto/10 p-4 rounded-3xl shadow-2xl md:hidden flex flex-col gap-2"
           >
             {navItems.map((item) => {
               const active = isActive(item.path);
-              
               return (
                 <Link 
                   key={item.path} 
                   href={item.path} 
-                  className={`block py-3 text-xl font-serif italic transition-colors ${
-                    active ? item.textColorActive : 'text-pastel-texto'
+                  className={`block py-2 px-3 text-[11px] uppercase tracking-[0.2em] font-sans font-medium transition-colors text-center rounded-xl ${
+                    active ? `${item.textColorActive} bg-pastel-fundo/50` : 'text-pastel-texto hover:bg-pastel-fundo/30'
                   }`}
                 >
                   {item.label}
@@ -152,49 +148,16 @@ export default function Navbar() {
               );
             })}
             
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                setIsRsvpOpen(true);
-              }}
-              className="mt-6 w-full mx-auto max-w-[200px] bg-pastel-texto text-pastel-fundo py-3.5 rounded-full font-sans font-bold uppercase tracking-[0.2em] text-[11px] shadow-lg cursor-pointer active:scale-95 transition-transform"
+            <div className="my-2 border-t border-pastel-texto/5" />
+            
+            <Link
+              href="/rsvp"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full flex justify-center bg-pastel-texto text-pastel-fundo py-3 rounded-xl font-sans font-bold uppercase tracking-[0.2em] text-[10px] active:scale-95 transition-transform"
             >
-              RSVP
-            </button>
+              Presença
+            </Link>
           </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ─── OVERLAY / MODAL DO RSVP ─── */}
-      <AnimatePresence>
-        {isRsvpOpen && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsRsvpOpen(false)}
-              className="absolute inset-0 bg-pastel-texto/60 backdrop-blur-md"
-            />
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              transition={{ type: 'spring', duration: 0.5 }}
-              className="relative w-full max-w-md z-10"
-            >
-              <button 
-                onClick={() => setIsRsvpOpen(false)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-pastel-fundo text-pastel-texto hover:bg-pastel-blush flex items-center justify-center transition-colors shadow-sm z-50 cursor-pointer"
-              >
-                <CloseIcon size={16} strokeWidth={2} />
-              </button>
-              
-              <RsvpForm />
-              
-            </motion.div>
-          </div>
         )}
       </AnimatePresence>
     </>
