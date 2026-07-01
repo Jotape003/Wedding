@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Clapperboard } from 'lucide-react';
 
 // Os "Capítulos" da história de vocês
 const chapters = [
@@ -56,6 +57,9 @@ export default function StoryCarousel() {
       
       {/* Cabeçalho da Sessão */}
       <div className="text-center space-y-4 mb-12 px-6">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-sm text-pastel-blush mb-2">
+          <Clapperboard size={28} strokeWidth={1.5} />
+        </div>
         <h2 className="text-4xl md:text-5xl font-serif italic text-pastel-texto">
           Nossa História
         </h2>

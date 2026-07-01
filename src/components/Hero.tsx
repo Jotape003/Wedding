@@ -8,7 +8,7 @@ export default function Hero() {
       {/* ─── FOTO DE FUNDO ─── */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070')" }}
+        style={{ backgroundImage: "url('/foto_capa.jpg')" }}
       >
         <div className="absolute inset-0 bg-black/40" />
       </div>

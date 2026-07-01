@@ -7,7 +7,7 @@ const MusicPlayer = memo(function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
-  const youtubePlaylistId = "PLotbF8Lf-hOhUUqgM3svjVgPAh1O_DK0B";
+  const idMusica = "JqbG31YoI6M";
 
   const handleToggle = (e?: MouseEvent<HTMLButtonElement>) => {
     if (isDragging) return;
@@ -38,15 +38,14 @@ const MusicPlayer = memo(function MusicPlayer() {
         style={{ transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
       >
         {/* Altura ajustada para 169px (16:9) para o YouTube não ficar com barras pretas */}
-        <div className="rounded-[1.5rem] overflow-hidden bg-[#0f0f0f] w-[300px] h-[169px] shadow-2xl ring-1 ring-white/10">
+        <div className="rounded-[1.5rem] overflow-hidden bg-[#0f0f0f] shadow-2xl ring-1 ring-white/10">
           {isPlaying && (
             <iframe
-              src={`https://www.youtube.com/embed/videoseries?list=${youtubePlaylistId}&autoplay=1`}
-              width="100%"
-              height="100%"
-              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              className="border-0"
+              src={`https://www.youtube.com/embed/${idMusica}?autoplay=1&loop=1&playlist=${idMusica}&controls=0&showinfo=0`}
+              width="0"
+              height="0"
+              allow="autoplay;"
+              className="hidden"
             />
           )}
         </div>
