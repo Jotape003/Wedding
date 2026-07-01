@@ -74,13 +74,13 @@ const MusicPlayer = memo(function MusicPlayer() {
           <div className={`flex flex-col items-start select-none transition-all duration-500 overflow-hidden ${
             isPlaying 
               ? 'w-0 opacity-0 ml-0 pointer-events-none' 
-              : 'w-[120px] opacity-100 ml-4' 
+              : 'w-[180px] opacity-100 ml-4' 
           }`}>
             <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-stone-800 whitespace-nowrap">
-              Nossa Trilha
+              Clique aqui!
             </span>
             <span className="text-[10px] uppercase tracking-widest font-bold text-stone-400 whitespace-nowrap">
-              Clique aqui!
+              Escute enquanto navega
             </span>
           </div>
         </button>

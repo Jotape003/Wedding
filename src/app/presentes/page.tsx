@@ -41,7 +41,7 @@ export default function PresentesPage() {
   };
 
   const abrirModal = (presente: Presente) => {
-    if (presente.comprado) return; // Trava de segurança extra
+    if (presente.comprado) return;
     setPresenteSelecionado(presente);
     setEtapaModal('ESCOLHA');
     setCopiado(false);
@@ -49,19 +49,28 @@ export default function PresentesPage() {
 
   const finalizarReserva = async (metodo: 'CARTAO' | 'PIX') => {
     if (!presenteSelecionado) return;
-    setProcessando(true);
 
+    let abaPagamento: Window | null = null;
+    if (metodo === 'CARTAO') {
+      abaPagamento = window.open('', '_blank');
+    }
+
+    setProcessando(true);
     await reservarPresente(presenteSelecionado.id);
     
-    // Atualiza a tela: muda para "comprado" e empurra para o final da lista visualmente
     setPresentes((prev) => {
       const novaLista = prev.map(p => p.id === presenteSelecionado.id ? { ...p, comprado: true } : p);
       return novaLista.sort((a, b) => Number(a.comprado) - Number(b.comprado) || a.valor - b.valor);
     });
 
     if (metodo === 'CARTAO' && presenteSelecionado.linkCredito) {
-      window.open(presenteSelecionado.linkCredito, '_blank');
+      if (abaPagamento) {
+        abaPagamento.location.href = presenteSelecionado.linkCredito;
+      } else {
+        window.location.href = presenteSelecionado.linkCredito;
+      }
       setEtapaModal('SUCESSO');
+      
     } else if (metodo === 'PIX' && presenteSelecionado.linkPix) {
       navigator.clipboard.writeText(presenteSelecionado.linkPix);
       setCopiado(true);
