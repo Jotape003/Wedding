@@ -14,9 +14,9 @@ const chapters = [
   },
   {
     id: 2,
-    title: "O Primeiro Encontro",
+    title: "Como nos apaixonamos",
     date: "Frio na barriga",
-    description: "Não tivemos um primeiro encontro como nos filmes. Mas frio na barriga mesmo foi a primeira vez que nos vimos um ano depois que nos conhecermos, o frio na barriga, coração acelerado e muita vergonha. Assim que nos vimos, nos abraçamos e demos um sorriso tão gostoso de felicidade pura.",
+    description: "Ficamos conversando pelo Instagram, depois WhatsApp e finalmente por ligações, era uma amizade muito gostosa, passávamos a noite conversando e rindo, mas a realidade é que os dois estavam apaixonados. Então em abril de 2022 ele se declarou e ela correspondeu, esperamos que os dois tivessem 18 anos e começamos a orar e falar com nossos pais. Um ano depois, o frio na barriga: fomos nos ver pela segunda vez em um acampamento de jovens da igreja dele. Uma semana depois começamos a namorar 🥹.",
     image: "/historia/2.jpeg"
   },
   {
@@ -30,7 +30,7 @@ const chapters = [
     id: 4,
     title: "Rumo ao Altar",
     date: "28 de Agosto de 2026",
-    description: "Agora, estamos preparando cada detalhe com muito amor para celebrar essa união com as pessoas que mais amamos.",
+    description: "Agora é nossa hora de virar uma só carne, unidos como um só, depois de quase 4 anos de muita oração e de muito muito amor nosso dia está chegando e estamos ansiosos por te-lo lá, para celebrar conosco e testemunhar o nosso sim diante de Deus e de todos que amamos. Estamos muito felizes por você fazer parte da nossa história e não vemos a hora de te ver no nosso grande dia.",
     image: "/historia/4.jpeg"
   }
 ];
