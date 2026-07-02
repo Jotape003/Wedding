@@ -5,15 +5,14 @@ import prisma from "../lib/prisma";
 
 // 1. Função para o convidado tentar "abrir a porta" com o código
 export async function validarCodigo(codigo: string) {
-  if (!codigo || codigo.trim() === '') {
-    return { error: 'Por favor, digite o código do convite.' };
-  }
-
   try {
-    // Busca a família e já traz a lista de convidados junto
-    const familia = await prisma.familia.findUnique({
-      where: { 
-        codigoAcesso: codigo.toUpperCase().trim() 
+    // A busca agora é inteligente e ignora maiúsculas/minúsculas
+    const familia = await prisma.familia.findFirst({
+      where: {
+        codigoAcesso: {
+          equals: codigo.trim(), // O trim() tira espaços em branco que o celular pode colocar sem querer
+          mode: 'insensitive'    // A mágica que resolve o problema!
+        }
       },
       include: {
         convidados: true
@@ -21,13 +20,14 @@ export async function validarCodigo(codigo: string) {
     });
 
     if (!familia) {
-      return { error: 'Código não encontrado. Verifique se digitou corretamente.' };
+      // Uma mensagem de erro mais carinhosa e clara
+      return { error: 'Ops! Código não encontrado. Verifique se digitou corretamente.' };
     }
 
-    return { success: true, familia };
+    return { familia };
   } catch (error) {
-    console.error('Erro ao buscar código:', error);
-    return { error: 'Erro no servidor. Tente novamente mais tarde.' };
+    console.error('Erro ao validar código:', error);
+    return { error: 'Ocorreu um erro ao buscar o convite. Tente novamente.' };
   }
 }
 
