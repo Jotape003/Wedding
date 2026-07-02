@@ -52,11 +52,13 @@ model Familia {
 }
 
 model Convidado {
-  id           String   @id @default(uuid())
-  nome         String
+  id          String   @id @default(uuid())
+  nome        String
   
-  familiaId    String
-  familia      Familia  @relation(fields: [familiaId], references: [id], onDelete: Cascade)
+  confirmado  Boolean  @default(false)
+  
+  familiaId   String
+  familia     Familia  @relation(fields: [familiaId], references: [id], onDelete: Cascade)
 }
 
 // ─── ESTRUTURA DOS PRESENTES ───

@@ -22,9 +22,9 @@ export default function HomePage() {
               Sejam bem-vindos!
             </h2>
             <p className="text-pastel-texto/80 leading-relaxed font-light text-lg">
-              Criamos este espaço para dividir com vocês cada etapa da nossa caminhada até o altar. Aqui, vocês encontrarão nossa história, os detalhes da nossa cerimônia, a nossa lista de presentes e o campo dedicado para a Confirmação de Presença.
+              Criamos este espaço para dividir com vocês cada etapa da nossa caminhada até o altar. Aqui, vocês encontrarão a contagem regressiva para o grande dia e a nossa história logo abaixo, já os detalhes da nossa cerimônia como horário e local, a nossa lista de presentes e o campo dedicado para a Confirmação de Presença estão visíveis na barra da parte de cima (ou no menu que parece um hambúrguer no canto superior direito se você estiver em um celular).
               
-              Além disso, preparamos um Mural especial para guardarmos o carinho de quem amamos; fiquem à vontade para deixar sua mensagem por lá. Estamos contando os dias para celebrar este capítulo inesquecível ao lado de vocês!
+              Além disso, no mesmo menu, preparamos um Mural especial para guardarmos o carinho de quem amamos; fiquem à vontade para deixar sua mensagem por lá. Estamos contando os dias para celebrar este capítulo inesquecível ao lado de vocês! Qualquer dúvida, é só nos mandar uma mensagem no WhatsApp!
             </p>
           </div>
 

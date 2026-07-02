@@ -32,18 +32,30 @@ export async function validarCodigo(codigo: string) {
 }
 
 // 2. Função para salvar o número final no banco
-export async function confirmarPresenca(familiaId: string, numeroPessoas: number) {
+export async function confirmarPresenca(familiaId: string, convidadosConfirmadosIds: string[]) {
   try {
+    await prisma.convidado.updateMany({
+      where: { familiaId },
+      data: { confirmado: false }
+    });
+
+    if (convidadosConfirmadosIds.length > 0) {
+      await prisma.convidado.updateMany({
+        where: {
+          id: { in: convidadosConfirmadosIds }
+        },
+        data: { confirmado: true }
+      });
+    }
+
     await prisma.familia.update({
       where: { id: familiaId },
-      data: {
-        numeroConfirmados: numeroPessoas
-      }
+      data: { numeroConfirmados: convidadosConfirmadosIds.length }
     });
 
     return { success: true };
   } catch (error) {
-    console.error('Erro ao confirmar:', error);
-    return { error: 'Não foi possível salvar sua confirmação.' };
+    console.error('Erro ao confirmar presença:', error);
+    return { error: 'Ocorreu um erro ao salvar sua confirmação. Tente novamente.' };
   }
 }

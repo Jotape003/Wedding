@@ -81,13 +81,13 @@ export default function PresentesPage() {
   };
 
   return (
-    <main className="min-h-screen pt-12 pb-24 px-6 relative overflow-hidden bg-[#FCFAF8]">
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-pastel-lavender/10 to-transparent pointer-events-none" />
+    <main className="min-h-screen pt-12 pb-24 px-6 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-[500px] to-transparent pointer-events-none" />
       
       <div className="max-w-6xl mx-auto relative z-10">
         
         <div className="text-center space-y-4 mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-sm text-pastel-lavender mb-2">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-sm text-pastel-blush mb-2">
             <Gift size={28} strokeWidth={1.5} />
           </div>
           <h1 className="text-4xl md:text-6xl font-serif italic text-pastel-texto">
