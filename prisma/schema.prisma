@@ -63,13 +63,16 @@ model Convidado {
 
 // ─── ESTRUTURA DOS PRESENTES ───
 model Presente {
-  id          String   @id @default(uuid())
-  nome        String
-  imagemUrl   String
-  valor       Float
-  linkCredito String?
-  linkPix     String?  @db.Text // Usando Text porque o código copia e cola do Pix é bem grande
+  id            String    @id @default(uuid())
+  nome          String
+  imagemUrl     String
+  valor         Float
+  linkCredito   String?
+  linkPix       String?
+  comprado      Boolean   @default(false)
   
-  // Controle para saber se já foi comprado/reservado
-  comprado    Boolean  @default(false) 
+  // ─── NOVOS CAMPOS PARA CONTROLE DOS NOIVOS ───
+  compradorNome String?
+  mensagem      String?
+  compradoEm    DateTime?
 }
