@@ -3,13 +3,13 @@
 import prisma from '@/src/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
-// Busca todos os presentes (os disponíveis no topo e ordenados por preço)
+// Busca todos os presentes
 export async function buscarPresentesDisponiveis() {
   try {
     const presentes = await prisma.presente.findMany({
       orderBy: [
         { comprado: 'asc' }, // Disponíveis (false) vêm antes de comprados (true)
-        { valor: 'asc' }     // Do mais barato ao mais caro
+        { nome: 'asc' }
       ]
     });
     return { success: true, presentes };
