@@ -1,6 +1,6 @@
 import prisma from '@/src/lib/prisma';
 import { Users, Gift, Heart, CalendarHeart, MessageSquare, Wallet, Lock, UserCheck, CheckCircle2 } from 'lucide-react';
-
+import FiltroConvidados from '@/src/components/FiltroConvidados';
 // Força o Next.js a sempre buscar dados novos ao recarregar a página
 export const dynamic = 'force-dynamic';
 
@@ -137,13 +137,8 @@ export default async function PainelAdminPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           
           {/* LISTA DE CONVIDADOS CONFIRMADOS */}
+          <FiltroConvidados convidados={listaConfirmados} />
           <div className="bg-white rounded-[32px] shadow-sm border border-pastel-texto/5 overflow-hidden flex flex-col h-full max-h-[600px]">
-            <div className="p-8 border-b border-pastel-texto/5 flex items-center justify-between bg-white z-10">
-              <h2 className="font-serif italic text-2xl text-pastel-texto flex items-center gap-3">
-                <UserCheck className="text-pastel-lavender" size={24} />
-                Lista de Presença
-              </h2>
-            </div>
             
             <div className="p-8 overflow-y-auto custom-scrollbar flex-1">
               {listaConfirmados.length === 0 ? (
