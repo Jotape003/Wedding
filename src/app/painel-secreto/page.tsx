@@ -1,7 +1,8 @@
 import prisma from '@/src/lib/prisma';
-import { Users, Gift, Heart, CalendarHeart, MessageSquare, Wallet, Lock, UserCheck, CheckCircle2 } from 'lucide-react';
 import FiltroConvidados from '@/src/components/FiltroConvidados';
-// Força o Next.js a sempre buscar dados novos ao recarregar a página
+import GerenciadorFamilias from '@/src/components/GerenciadorFamilia';
+import { Users, Gift, Heart, CalendarHeart, MessageSquare, Wallet, Lock } from 'lucide-react';
+
 export const dynamic = 'force-dynamic';
 
 export default async function PainelAdminPage({
@@ -24,19 +25,28 @@ export default async function PainelAdminPage({
   }
 
   // ─── 2. BUSCA DE DADOS NO BANCO ───
-  // Contagem geral
+  // Convidados
   const totalConvidados = await prisma.convidado.count();
   const confirmadosCount = await prisma.convidado.count({
     where: { confirmado: true },
   });
 
-  // Lista de confirmados (em ordem alfabética)
   const listaConfirmados = await prisma.convidado.findMany({
     where: { confirmado: true },
     orderBy: { nome: 'asc' },
   });
 
-  // Presentes
+  // ─── NOVA CONSULTA: Busca as famílias cadastradas e seus convidados ───
+  const listaFamiliasCompleta = await prisma.familia.findMany({
+    orderBy: { nomeExibicao: 'asc' },
+    include: {
+      convidados: {
+        orderBy: { nome: 'asc' }
+      }
+    }
+  });
+
+  // Presentes (Ordem alfabética para embaralhar preços na vitrine)
   const presentesComprados = await prisma.presente.findMany({
     where: { comprado: true },
     orderBy: { compradoEm: 'desc' }, 
@@ -133,35 +143,14 @@ export default async function PainelAdminPage({
           </div>
         </div>
 
-        {/* ─── GRID INFERIOR: PRESENTES E CONVIDADOS LADO A LADO EM TELAS GRANDES ─── */}
+        {/* ─── NOVO: SEÇÃO DE GERENCIAMENTO DE FAMÍLIAS DE ALTURA TOTAL ─── */}
+        <GerenciadorFamilias familias={listaFamiliasCompleta} />
+
+        {/* GRID INFERIOR: PRESENTES E CONVIDADOS LADO A LADO */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           
-          {/* LISTA DE CONVIDADOS CONFIRMADOS */}
+          {/* LISTA DE CONVIDADOS COM BUSCA */}
           <FiltroConvidados convidados={listaConfirmados} />
-          <div className="bg-white rounded-[32px] shadow-sm border border-pastel-texto/5 overflow-hidden flex flex-col h-full max-h-[600px]">
-            
-            <div className="p-8 overflow-y-auto custom-scrollbar flex-1">
-              {listaConfirmados.length === 0 ? (
-                <div className="text-center py-12 text-pastel-texto/40">
-                  <Users size={40} strokeWidth={1} className="mx-auto mb-4 opacity-50" />
-                  <p>Nenhuma confirmação até o momento.</p>
-                </div>
-              ) : (
-                <div className="flex flex-col gap-3">
-                  {listaConfirmados.map((convidado) => (
-                    <div key={convidado.id} className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 transition-colors hover:bg-gray-100">
-                      <div className="w-8 h-8 rounded-full bg-[#00B4A0]/10 text-[#00B4A0] flex items-center justify-center flex-shrink-0">
-                        <CheckCircle2 size={16} strokeWidth={2.5} />
-                      </div>
-                      <span className="font-sans font-medium text-pastel-texto text-sm">
-                        {convidado.nome}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
 
           {/* LISTA DE PRESENTES RECEBIDOS */}
           <div className="bg-white rounded-[32px] shadow-sm border border-pastel-texto/5 overflow-hidden flex flex-col h-full max-h-[600px]">
