@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Site de Casamento & Gestão de Cerimonial
 
-## Getting Started
+Este é o repositório oficial do nosso site de casamento. Mais do que uma simples página de informações, este projeto é uma plataforma *full-stack* completa, desenvolvida sob medida para gerenciar a lista de presentes, a confirmação de presença (RSVP) integrada por famílias e um painel de controle administrativo exclusivo para os noivos.
 
-First, run the development server:
+## Sobre o Projeto
 
+O sistema foi desenhado com uma interface elegante, paleta de cores pastéis (sage, blush, butter) e uma arquitetura robusta. Ele elimina a necessidade de serviços terceirizados caros de cerimonial digital, oferecendo controle total sobre os dados dos convidados e os recebimentos via PIX e Cartão de Crédito.
+
+## 🛠️ Tecnologias Utilizadas
+
+* **Front-end:** Next.js (App Router), React, Tailwind CSS, Framer Motion (Animações).
+* **Back-end:** Next.js Server Actions.
+* **Banco de Dados:** PostgreSQL, Prisma ORM.
+* **Ícones:** Lucide React.
+* **Deploy:** Vercel.
+
+## 🌟 Principais Funcionalidades
+
+### Para os Convidados:
+* **Lista de Presentes Inteligente:** Fluxo de pagamento "à prova de curiosos". O item só é bloqueado no banco de dados após o convidado informar o nome, deixar uma mensagem e confirmar ativamente que concluiu o PIX ou Cartão.
+* **Geração de QR Code:** Conversão automática de chaves PIX em imagens QR Code na própria tela.
+* **RSVP Fechado:** Confirmação de presença restrita através de Códigos de Acesso únicos por família (enviados no convite físico).
+
+### Para os Noivos (Painel Secreto):
+* **Dashboard em Tempo Real:** Acompanhamento de metas de arrecadação financeira, dias restantes para o evento e progresso das confirmações de presença.
+* **CRM de Famílias:** Criação de núcleos familiares e geração de códigos de acesso com 1 clique.
+* **Gestão de Convidados:** Adição, edição e remoção de convidados, com filtro de busca em tempo real.
+* **Controle de Presentes:** Lista detalhada com o nome do comprador, valor arrecadado e mensagens de carinho deixadas no momento da reserva.
+
+---
+
+## 🚀 Como Executar o Projeto Localmente
+
+Siga os passos abaixo para rodar o projeto na sua máquina:
+
+### 1. Pré-requisitos
+Certifique-se de ter o [Node.js](https://nodejs.org/) instalado na sua máquina. Você também precisará de um banco de dados PostgreSQL rodando (localmente ou em nuvem, como na Vercel ou Supabase).
+
+### 2. Clonando o Repositório
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+cd seu-repositorio
